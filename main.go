@@ -10,14 +10,13 @@ import (
 )
 
 func main() {
-	// Initialisation de raylib
 	rl.InitWindow(800, 600, "Hangman Game")
 	rl.SetTargetFPS(60)
 
 	rand.Seed(time.Now().UnixNano())
 
-	dico := []string{"AVION", "ARBRE", "CAMIONS", "CHEVEUX", "CAMPING", "CHAUSSURE", "FOUET", "CHAMPS", "HORLOGE", "CHIPS"} // liste de mot possible
-	wordToGuess := dico[rand.Intn(len(dico))] // le mot à deviner choisi aléatoirement dans la taille du tableau
+	dico := []string{"AVION", "ARBRE", "CAMIONS", "CHEVEUX", "CAMPING", "CHAUSSURE", "FOUET", "CHAMPS", "HORLOGE", "CHIPS", "ORDINATEUR", "TABLE", "APERO", "TABLEAU", "WAGON", "CAILLOUX"}
+	wordToGuess := dico[rand.Intn(len(dico))]
 	guessedWord := make([]string, len(wordToGuess))
 
 	for i := range guessedWord {
@@ -27,8 +26,7 @@ func main() {
 	attemptsLeft := 6
 	guessedLetters := make([]string, 0)
 
-	for !rl.WindowShouldClose() { // La boucle principale du jeu
-
+	for !rl.WindowShouldClose() {
 		if attemptsLeft == 0 || strings.Join(guessedWord, "") == wordToGuess {
 			break
 		}
@@ -36,90 +34,90 @@ func main() {
 		rl.BeginDrawing()
 		rl.ClearBackground(rl.Blue)
 
-		// Dessiner l'interface utilisateur
-		rl.DrawText(fmt.Sprintf("Vie restantes : %d", attemptsLeft), 10, 10, 20, rl.Black)
-		rl.DrawText(fmt.Sprintf("Lettres utilisé : %s", strings.Join(guessedLetters, " ")), 10, 40, 20, rl.Black)
+		rl.DrawText(fmt.Sprintf("Vies restantes : %d", attemptsLeft), 10, 10, 20, rl.Black)
+		rl.DrawText(fmt.Sprintf("Lettres utilisées : %s", strings.Join(guessedLetters, " ")), 10, 40, 20, rl.Black)
 		rl.DrawText(fmt.Sprintf("Mot caché : %s", strings.Join(guessedWord, " ")), 10, 70, 20, rl.Black)
-
-		var guess string // Je code ca comme un golmon mais je sais pas comment le faire autrement ( j'obtimiserais le code plus tard )
-		if rl.IsKeyDown(rl.KeyQ) {
-			guess = "A"
-		} else if rl.IsKeyDown(rl.KeyB) {
-			guess = "B"
-		} else if rl.IsKeyDown(rl.KeyC) {
-            guess = "C"
-        } else if rl.IsKeyDown(rl.KeyD) {
-            guess = "D"
-        } else if rl.IsKeyDown(rl.KeyE) {
-            guess = "E"
-        } else if rl.IsKeyDown(rl.KeyF) {
-            guess = "F"
-        } else if rl.IsKeyDown(rl.KeyG) {
-            guess = "G"
-        } else if rl.IsKeyDown(rl.KeyH) {
-            guess = "H"
-        } else if rl.IsKeyDown(rl.KeyI) {
-            guess = "I"
-        } else if rl.IsKeyDown(rl.KeyJ) {
-            guess = "J"
-        } else if rl.IsKeyDown(rl.KeyK) {
-            guess = "K"
-        } else if rl.IsKeyDown(rl.KeyL) {
-            guess = "L"
-        } else if rl.IsKeyDown(rl.KeyM) {
-            guess = "M"
-        } else if rl.IsKeyDown(rl.KeyN) {
-            guess = "N"
-        } else if rl.IsKeyDown(rl.KeyO) {
-            guess = "O"
-        } else if rl.IsKeyDown(rl.KeyP) {
-            guess = "P"
-        } else if rl.IsKeyDown(rl.KeyA) {
-            guess = "Q"
-        } else if rl.IsKeyDown(rl.KeyR) {
-            guess = "R"
-        } else if rl.IsKeyDown(rl.KeyS) {
-            guess = "S"
-        } else if rl.IsKeyDown(rl.KeyT) {
-            guess = "T"
-        } else if rl.IsKeyDown(rl.KeyU) {
-            guess = "U"
-        } else if rl.IsKeyDown(rl.KeyV) {
-            guess = "V"
-        } else if rl.IsKeyDown(rl.KeyZ) {
-            guess = "W"
-        } else if rl.IsKeyDown(rl.KeyX) {
-            guess = "X"
-        } else if rl.IsKeyDown(rl.KeyY) {
-            guess = "Y"
-        } else if rl.IsKeyDown(rl.KeyW) {
-            guess ="Z"
-        }
-		if guess != "" {
-			guess = strings.ToUpper(guess)
-
-			if strings.Contains(wordToGuess, guess) {
-				for i, letter := range wordToGuess {
-					if string(letter) == guess {
-						guessedWord[i] = guess
-					}
-				}
-			} else {
-				fmt.Printf("La lettre %s n'est pas dans le mot.\n", guess)
-				attemptsLeft--
-			}
-
-			guessedLetters = append(guessedLetters, guess)
+        // Cette parti est récupée d'un cours de Gamecodeur - L'école de jeux vidéo en Ligne ( une chaine Youtube )
+        // Elle sert a initié chaque lettre 
+		if rl.IsKeyPressed(rl.KeyQ) {
+			makeGuess("A", wordToGuess, guessedWord, &attemptsLeft, &guessedLetters)
+		} else if rl.IsKeyPressed(rl.KeyB) {
+			makeGuess("B", wordToGuess, guessedWord, &attemptsLeft, &guessedLetters)
+		} else if rl.IsKeyPressed(rl.KeyC) {
+			makeGuess("C", wordToGuess, guessedWord, &attemptsLeft, &guessedLetters)
+		} else if rl.IsKeyPressed(rl.KeyD) {
+			makeGuess("D", wordToGuess, guessedWord, &attemptsLeft, &guessedLetters)
+		} else if rl.IsKeyPressed(rl.KeyE) {
+			makeGuess("E", wordToGuess, guessedWord, &attemptsLeft, &guessedLetters)
+		} else if rl.IsKeyPressed(rl.KeyF) {
+			makeGuess("F", wordToGuess, guessedWord, &attemptsLeft, &guessedLetters)
+		} else if rl.IsKeyPressed(rl.KeyG) {
+			makeGuess("G", wordToGuess, guessedWord, &attemptsLeft, &guessedLetters)
+		} else if rl.IsKeyPressed(rl.KeyH) {
+			makeGuess("H", wordToGuess, guessedWord, &attemptsLeft, &guessedLetters)
+		} else if rl.IsKeyPressed(rl.KeyI) {
+			makeGuess("I", wordToGuess, guessedWord, &attemptsLeft, &guessedLetters)
+		} else if rl.IsKeyPressed(rl.KeyJ) {
+			makeGuess("J", wordToGuess, guessedWord, &attemptsLeft, &guessedLetters)
+		} else if rl.IsKeyPressed(rl.KeyK) {
+			makeGuess("K", wordToGuess, guessedWord, &attemptsLeft, &guessedLetters)
+		} else if rl.IsKeyPressed(rl.KeyL) {
+			makeGuess("L", wordToGuess, guessedWord, &attemptsLeft, &guessedLetters)
+		} else if rl.IsKeyPressed(rl.KeyM) {
+			makeGuess("M", wordToGuess, guessedWord, &attemptsLeft, &guessedLetters)
+		} else if rl.IsKeyPressed(rl.KeyN) {
+			makeGuess("N", wordToGuess, guessedWord, &attemptsLeft, &guessedLetters)
+		} else if rl.IsKeyPressed(rl.KeyO) {
+			makeGuess("O", wordToGuess, guessedWord, &attemptsLeft, &guessedLetters)
+		} else if rl.IsKeyPressed(rl.KeyP) {
+			makeGuess("P", wordToGuess, guessedWord, &attemptsLeft, &guessedLetters)
+		} else if rl.IsKeyPressed(rl.KeyA) {
+			makeGuess("Q", wordToGuess, guessedWord, &attemptsLeft, &guessedLetters)
+		} else if rl.IsKeyPressed(rl.KeyR) {
+			makeGuess("R", wordToGuess, guessedWord, &attemptsLeft, &guessedLetters)
+		} else if rl.IsKeyPressed(rl.KeyS) {
+			makeGuess("S", wordToGuess, guessedWord, &attemptsLeft, &guessedLetters)
+		} else if rl.IsKeyPressed(rl.KeyT) {
+			makeGuess("T", wordToGuess, guessedWord, &attemptsLeft, &guessedLetters)
+		} else if rl.IsKeyPressed(rl.KeyU) {
+			makeGuess("U", wordToGuess, guessedWord, &attemptsLeft, &guessedLetters)
+		} else if rl.IsKeyPressed(rl.KeyV) {
+			makeGuess("V", wordToGuess, guessedWord, &attemptsLeft, &guessedLetters)
+		} else if rl.IsKeyPressed(rl.KeyZ) {
+			makeGuess("W", wordToGuess, guessedWord, &attemptsLeft, &guessedLetters)
+		} else if rl.IsKeyPressed(rl.KeyX) {
+			makeGuess("X", wordToGuess, guessedWord, &attemptsLeft, &guessedLetters)
+		} else if rl.IsKeyPressed(rl.KeyY) {
+			makeGuess("Y", wordToGuess, guessedWord, &attemptsLeft, &guessedLetters)
+		} else if rl.IsKeyPressed(rl.KeyW) {
+			makeGuess("Z", wordToGuess, guessedWord, &attemptsLeft, &guessedLetters)
 		}
-
+        // Fin de la partie récupée 
 		rl.EndDrawing()
 	}
 
 	rl.CloseWindow()
 
 	if attemptsLeft == 0 {
-		fmt.Println("Perdu ! le mot était :", wordToGuess)
+		fmt.Println("Perdu ! Le mot était :", wordToGuess)
 	} else {
-		fmt.Println("GG tu as trouvé le mot:", wordToGuess)
+		fmt.Println("GG ! Tu as trouvé le mot :", wordToGuess)
 	}
+}
+
+func makeGuess(guess string, wordToGuess string, guessedWord []string, attemptsLeft *int, guessedLetters *[]string) {
+	guess = strings.ToUpper(guess)
+
+	if strings.Contains(wordToGuess, guess) {
+		for i, letter := range wordToGuess {
+			if string(letter) == guess {
+				guessedWord[i] = guess
+			}
+		}
+	} else {
+		fmt.Printf("La lettre %s n'est pas dans le mot.\n", guess)
+		*attemptsLeft--
+	}
+
+	*guessedLetters = append(*guessedLetters, guess)
 }
