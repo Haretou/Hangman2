@@ -10,7 +10,7 @@ import (
 func main() {
     rand.Seed(time.Now().UnixNano())
 
-    dico := []string{"AVION", "ARBRE", "CAMIONS", "CHEVEUX", "CAMPING", "CHAUSSURE"}
+    dico := []string{"AVION", "ARBRE", "CAMIONS", "CHEVEUX", "CAMPING", "CHAUSSURE", "CHOUETTE", "LUNETTE"}
     wordToGuess := dico[rand.Intn(len(dico))] // le mot à deviner
     guessedWord := make([]string, len(wordToGuess))
 
