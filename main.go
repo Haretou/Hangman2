@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	"math/rand"
 	"strings"
+	"math/rand"
 	"time"
+
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
@@ -14,7 +15,7 @@ func main() {
 
 	rand.Seed(time.Now().UnixNano())
 
-	dico := []string{"AVION", "ARBRE", "CAMIONS", "CHEVEUX", "CAMPING", "CHAUSSURE", "FOUET", "CHAMPS", "HORLOGE", "CHIPS", "ORDINATEUR", "TABLE", "APERO", "TABLEAU", "WAGON", "CAILLOUX", "BIERE", "GUERRE", "CAMPING", "CHATON", "GITANT", "ROUTE"}
+	dico := []string{"AVION", "ARBRE", "CAMIONS", "CHEVEUX", "CAMPING", "CHAUSSURE", "FOUET", "CHAMPS", "HORLOGE", "CHIPS", "ORDINATEUR", "TABLE", "APERO", "TABLEAU", "WAGON", "CAILLOUX"}
 	wordToGuess := dico[rand.Intn(len(dico))]
 	guessedWord := make([]string, len(wordToGuess))
 
@@ -22,14 +23,14 @@ func main() {
 		guessedWord[i] = "_"
 	}
 
-	attemptsLeft := 6
+	attemptsLeft := 8
 	guessedLetters := make([]string, 0)
 
 	for !rl.WindowShouldClose() {
 		if attemptsLeft == 0 || strings.Join(guessedWord, "") == wordToGuess {
 			break
 		}
-
+		
 		rl.BeginDrawing()
 		rl.ClearBackground(rl.Gray)
 
@@ -91,12 +92,28 @@ func main() {
 		} else if rl.IsKeyPressed(rl.KeyW) {
 			makeGuess("Z", wordToGuess, guessedWord, &attemptsLeft, &guessedLetters)
 		}
-        // Fin de la partie récupée 
+		if attemptsLeft ==8  {
+			rl.DrawText("", 600,300,15,rl.Black)
+		}else if attemptsLeft ==7 {
+			rl.DrawText("_ _\n|   |________\n|               |\n|__________|",350,400,15,rl.White)
+		}else if attemptsLeft ==6 {
+			rl.DrawText("  |\n  |\n  |\n  |\n  |\n  |\n_ _\n|   |________\n|               |\n|__________|",350,268,15,rl.White)
+		}else if attemptsLeft ==5 {
+			rl.DrawText("  _________\n  |\n  |\n  |\n  |\n  |\n  |\n_ _\n|   |________\n|               |\n|__________|",350,258,15,rl.White)
+		}else if attemptsLeft ==4 {
+			rl.DrawText("\n _________\n  |           |\n  |\n  |\n  |\n  |\n  |\n_ _\n|   |________\n|               |\n|__________|",350,268,15,rl.White)
+		}else if attemptsLeft ==3 {
+			rl.DrawText("\n _________\n  |           |\n  |          O\n  |          |\n  |\n  |\n  |\n_ _\n|   |________\n|               |\n|__________|",350,268,15,rl.White)
+		}else if attemptsLeft ==2 {
+			rl.DrawText("\n _________\n  |           |\n  |          O\n  |     -    |    - \n  |\n  |\n  |\n_ _\n|   |________\n|               |\n|__________|",350,268,15,rl.White)
+		}else if attemptsLeft ==1 {
+			rl.DrawText("\n _________\n  |           |\n  |          O\n  |     -    |    - \n  |        |    | \n  |\n  |\n_ _\n|   |________\n|               |\n|__________|",350,268,15,rl.White)
+		}
+        // Fin de la n récupée 
 		rl.EndDrawing()
 	}
 
 	rl.CloseWindow()
-
 	if attemptsLeft == 0 {
 		fmt.Println("Perdu ! Le mot était :", wordToGuess)
 	} else {
