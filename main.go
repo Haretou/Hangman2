@@ -2,10 +2,9 @@ package main
 
 import (
 	"fmt"
-	"strings"
 	"math/rand"
+	"strings"
 	"time"
-
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
@@ -15,7 +14,7 @@ func main() {
 
 	rand.Seed(time.Now().UnixNano())
 
-	dico := []string{"AVION", "ARBRE", "CAMIONS", "CHEVEUX", "CAMPING", "CHAUSSURE", "FOUET", "CHAMPS", "HORLOGE", "CHIPS", "ORDINATEUR", "TABLE", "APERO", "TABLEAU", "WAGON", "CAILLOUX"}
+	dico := []string{"AVION", "ARBRE", "CAMIONS", "CHEVEUX", "CAMPING", "CHAUSSURE", "FOUET", "CHAMPS", "HORLOGE", "CHIPS", "ORDINATEUR", "TABLE", "APERO", "TABLEAU", "WAGON", "CAILLOUX", "BIERE", "GUERRE", "CAMPING", "CHATON", "GITANT", "ROUTE"}
 	wordToGuess := dico[rand.Intn(len(dico))]
 	guessedWord := make([]string, len(wordToGuess))
 
@@ -32,7 +31,7 @@ func main() {
 		}
 
 		rl.BeginDrawing()
-		rl.ClearBackground(rl.Blue)
+		rl.ClearBackground(rl.Gray)
 
 		rl.DrawText(fmt.Sprintf("Vies restantes : %d", attemptsLeft), 10, 10, 20, rl.Black)
 		rl.DrawText(fmt.Sprintf("Lettres utilisées : %s", strings.Join(guessedLetters, " ")), 10, 40, 20, rl.Black)
